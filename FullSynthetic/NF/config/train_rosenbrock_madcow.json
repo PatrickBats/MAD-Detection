@@ -1,0 +1,14 @@
+{
+    "max_epoch": 20,
+    "depth": 8,
+    "K": 1,
+    "lr": 0.001,
+    "sigma": 0.4,
+    "sim_name": "rosenbrock-madcow",
+    "lr_step": 5,
+    "resume": true,
+    "madcow": 100,
+    "batchsize": 256,
+    "n_hidden": 64,
+    "r": 1.0
+}
