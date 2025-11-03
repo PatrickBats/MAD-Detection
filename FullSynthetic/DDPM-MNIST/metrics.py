@@ -223,32 +223,32 @@ def load_datasets_dump(iteration,save_dir, w, batch_size = 128 ):
     tf = transforms.Compose([transforms.ToTensor()])
     dataset = MNIST("./data", train=True, download=True, transform=tf)
     if iteration == 0:
-        dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=5)
+        dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=0)
     else:
         X = torch.load( save_dir + f"gen_data_with_w{iteration}_w{w}" )
         C = torch.load(save_dir + f"gen_index_with_w{iteration}_w{w}")
         dataset.data = np.squeeze(X.cpu())
         dataset.targets = C.cpu()
-        dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=5)
+        dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=0)
     return dataloader
 
 def load_datasets(iteration,save_dir, w, batch_size = 128 ):
-    
+
     tf = transforms.Compose([transforms.ToTensor()])
     dataset = MNIST("./data", train=True, download=True, transform=tf)
-    if iteration == 1:
+    if iteration == 0:
         X = torch.load( save_dir + f"gen_data_with_w_initial_w{w}" )
         C = torch.load(save_dir + f"gen_index_with_w_initial_w{w}")
         C = torch.tensor(C)
         dataset.data = np.squeeze(X.cpu())
         dataset.targets = C.cpu()
-        dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=5)
+        dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=0)
     else:
         X = torch.load( save_dir + f"gen_data_with_w{iteration-1}_w{w}" )
         C = torch.load(save_dir + f"gen_index_with_w{iteration-1}_w{w}")
         dataset.data = np.squeeze(X.cpu())
         dataset.targets = C.cpu()
-        dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=5)
+        dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=0)
     return dataloader
 
 def extract_mnist_features(images, device):
@@ -597,15 +597,38 @@ def generate_samples(model, N, w, max_c):
     X = []
     C = []
     model.eval()
+
+    # Add progress tracking
+    import time
+    total_generated = 0
+    start_time = time.time()
+    print(f"Generating {N} samples in {len(N_sample)} batches...")
+
     with torch.no_grad():
-        for n in N_sample:
+        for batch_idx, n in enumerate(N_sample):
+            batch_start = time.time()
             x_gen, c = model(0 ,0, 0, n, w)
+            batch_time = time.time() - batch_start
+
             if n < max_c:
                 X.append( x_gen[0:(N - k*gpu_num)] )
                 C.append( c[0:(N - k*gpu_num)])
+                total_generated += (N - k*gpu_num)
             else:
                 X.append(x_gen)
                 C.append(c)
+                total_generated += n
+
+            # Calculate time estimates
+            elapsed = time.time() - start_time
+            progress = total_generated / N
+            if progress > 0:
+                eta = elapsed / progress - elapsed
+                eta_min = eta / 60
+
+            # Print progress with timing
+            print(f"  Batch {batch_idx+1}/{len(N_sample)}: {total_generated}/{N} ({100*progress:.1f}%) | Batch: {batch_time:.1f}s | Elapsed: {elapsed/60:.1f}min | ETA: {eta_min:.1f}min")
+
     return torch.clip(torch.cat(X),0,1), torch.cat(C)
         
             

@@ -21,7 +21,7 @@ import metrics as util
 
 
 N_eval = 1000
-N_next = 10
+N_next = 60000
 max_c = 500
 
 w = 0
@@ -113,8 +113,8 @@ for generation in range(generation_number):
     
     ### computing generated data features
     
-    mu_gen = np.mean(np.transpose(real_features), axis = 1)
-    cov_gen = np.cov(np.transpose(real_features))
+    mu_gen = np.mean(np.transpose(generated_features), axis = 1)
+    cov_gen = np.cov(np.transpose(generated_features))
     
     
     print('computing metrics')
