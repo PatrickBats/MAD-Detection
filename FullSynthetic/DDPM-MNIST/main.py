@@ -23,11 +23,10 @@ import metrics as util
 N_eval = 1000
 N_next = 60000
 max_c = 500
-
-w = 0
+w = [0]
 generation_number = 20
-n_epoch = 1
-batch_size = 32
+n_epoch = 40
+batch_size = 128
 n_T = 500 # 500
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 n_classes = 10
