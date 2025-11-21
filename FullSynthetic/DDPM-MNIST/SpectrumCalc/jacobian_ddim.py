@@ -70,14 +70,14 @@ def generation_full_500steps_ddim(z, model, class_label=7):
     # Start with noise
     x = z.clone().float()
 
-    # Full DDIM denoising loop (500 steps, deterministic)
+    # Full DDIM denoising loop 
     for t in timesteps:
         t_norm = torch.tensor([t / model.n_T], device=device, dtype=torch.float32).view(1, 1, 1, 1)
 
         # Predict noise (no torch.no_grad() for Jacobian)
         eps = model.nn_model(x, c, t_norm, context_mask)
 
-        # Apply DDIM denoising formula (deterministic)
+        # Apply DDIM denoising formula 
         if t > 1:
             # Predict x_0 from current x_t
             x_0_pred = (x - model.sqrtmab[t] * eps) / model.sqrtab[t]
@@ -85,7 +85,7 @@ def generation_full_500steps_ddim(z, model, class_label=7):
             # Compute x_{t-1} using DDIM formula
             x = model.sqrtab[t-1] * x_0_pred + model.sqrtmab[t-1] * eps
         else:
-            # Final step: directly predict x_0
+            #predict x_0
             x = (x - model.sqrtmab[t] * eps) / model.sqrtab[t]
 
     return x
@@ -110,7 +110,6 @@ def compute_jacobian_for_generation(gen, z_fixed_cpu, gpu_id, class_label=7):
     try:
         model = load_model(gen, device)
 
-        # Move fixed noise to this GPU
         z_fixed = z_fixed_cpu.to(device)
         z_flat = z_fixed.flatten().detach().float().requires_grad_(True)
 
@@ -127,7 +126,6 @@ def compute_jacobian_for_generation(gen, z_fixed_cpu, gpu_id, class_label=7):
         jacobian = F.jacobian(gen_func, z_flat)
         elapsed = time.time() - start_time
 
-        print(f"[GPU {gpu_id}] Jacobian computed in {elapsed:.2f} seconds ({elapsed/60:.1f} min)")
         print(f"[GPU {gpu_id}] Jacobian shape: {jacobian.shape}")
 
         # Compute SVD for eigenvalues
@@ -136,7 +134,6 @@ def compute_jacobian_for_generation(gen, z_fixed_cpu, gpu_id, class_label=7):
 
         eigenvalues = S.pow(2).cpu().numpy()
 
-        # Also generate the image for visualization
         with torch.no_grad():
             image = generation_full_500steps_ddim(z_fixed, model, class_label)
 
@@ -190,8 +187,6 @@ def main():
 
     # Process all generations in parallel
     mp.set_start_method('spawn', force=True)
-
-    print("Starting parallel computation...")
     start_total = time.time()
 
     with mp.Pool(processes=len(generations)) as pool:
@@ -202,7 +197,6 @@ def main():
         )
 
     total_time = time.time() - start_total
-    print(f"All generations completed in {total_time:.2f} seconds ({total_time/60:.1f} min)")
 
     # Collect results
     results_dict = {}
