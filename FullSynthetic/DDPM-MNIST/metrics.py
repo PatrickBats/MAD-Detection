@@ -511,7 +511,7 @@ class DDPM(nn.Module):
             c_i = c_i.repeat(2)
             context_mask = context_mask.repeat(2)
             context_mask[n_sample:] = 1. # makes second half of batch context free
-
+            
             
             for i in range(self.n_T, 0, -1):
 
@@ -533,7 +533,7 @@ class DDPM(nn.Module):
                 x_i = x_i[:n_sample]
                 x_i = (
                     self.oneover_sqrta[i] * (x_i - eps * self.mab_over_sqrtmab[i])
-                    + self.sqrt_beta_t[i] * z
+                    + self.sqrt_beta_t[i] * z # noise addition
                 )
             
             return x_i, c_i
