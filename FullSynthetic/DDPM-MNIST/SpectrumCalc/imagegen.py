@@ -1,7 +1,4 @@
 #!/usr/bin/env python3
-"""
-Generate sample images using Gen 0 checkpoint with DDIM sampling.
-"""
 
 import torch
 import numpy as np
@@ -27,7 +24,6 @@ def load_model(generation=0, device='cuda'):
     nn_model = ContextUnet(in_channels=1, n_feat=128, n_classes=10)
     ddpm = DDPM(nn_model=nn_model, betas=(1e-4, 0.02), n_T=n_T, device=device, drop_prob=0.1)
 
-    # Handle initial model checkpoint
     if generation == 'initial':
         checkpoint_path = os.path.join(parent_dir, 'data', 'diffusion_outputs10', 'model_initial.pth')
     else:
@@ -111,8 +107,6 @@ def main():
                              fontsize=12, fontweight='bold',
                              va='center', ha='right')
 
-        # Print value range for first sample
-        print(f"  Sample 0 value range: [{ddim_samples[0].min():.3f}, {ddim_samples[0].max():.3f}]")
 
     plt.suptitle('DDIM Sampling Across Generations (Initial + Gen 0-5)', fontsize=14, fontweight='bold')
     plt.tight_layout()

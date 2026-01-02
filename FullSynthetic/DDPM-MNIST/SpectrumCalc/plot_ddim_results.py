@@ -23,21 +23,18 @@ def plot_eigenvalue_comparison(results):
 
     colors = ['blue', 'green', 'orange', 'red', 'purple', 'brown', 'cyan']
 
-    # Sort keys with 'initial' first
     sorted_keys = sorted(results.keys(), key=lambda x: (-1 if x == 'initial' else x))
 
     for idx, gen in enumerate(sorted_keys):
         eigs = results[gen]['eigenvalues']
         color = colors[idx % len(colors)]
 
-        # Format label
         label = 'Initial' if gen == 'initial' else f'Gen {gen}'
 
-        # Log scale plot
         ax1.semilogy(range(1, len(eigs)+1), eigs,
                     label=label, color=color, linewidth=2)
 
-        # Histogram
+        
         ax2.hist(np.log10(eigs + 1e-10), bins=50, alpha=0.5,
                 label=label, color=color)
 
@@ -98,7 +95,6 @@ def plot_generated_images(results):
     plt.savefig('jacobian_ddim_images.png', dpi=150)
     plt.close()
 
-    print("✓ Images saved to jacobian_ddim_images.png")
 
 
 def print_statistics(results):
@@ -107,9 +103,6 @@ def print_statistics(results):
     # Sort keys with 'initial' first
     sorted_keys = sorted(results.keys(), key=lambda x: (-1 if x == 'initial' else x))
 
-    print("\n" + "="*70)
-    print("Eigenvalue Statistics")
-    print("="*70)
 
     for gen in sorted_keys:
         eigs = results[gen]['eigenvalues']
@@ -133,7 +126,6 @@ def print_statistics(results):
 def main():
     """Load results and create all plots."""
 
-    print("Loading DDIM Jacobian results...")
     results = load_results()
 
     print(f"Loaded results for generations: {sorted(results.keys(), key=lambda x: (-1 if x == 'initial' else x))}")
@@ -145,8 +137,6 @@ def main():
     print("\nCreating plots...")
     plot_eigenvalue_comparison(results)
     plot_generated_images(results)
-
-    print("\n✓ All plots created successfully!")
 
 
 if __name__ == "__main__":

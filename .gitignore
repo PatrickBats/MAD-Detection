@@ -1,0 +1,59 @@
+# Data files (large)
+*.pt
+*.pth
+*.pkl
+*.npy
+*.npz
+
+# Image outputs (can be regenerated)
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# Data directories
+data/
+*/data/
+*/*/data/
+**/data/
+
+# Raw dataset files
+*.gz
+*-ubyte
+
+# Model outputs
+*_outputs*/
+svd_results*/
+models/
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Claude Code settings (local only)
+.claude/
+
+# Misc
+*.log
+*.tmp
+activate.ps1
+
+# External repos (should be submodules if needed)
+stylegan2-ada-pytorch/
+stylegan3/
+NeonTest/23288_Neon_Negative_Extrapolat_Supplementary Material/Neon_SM/VAR/VAR_imagenet_256/
+NeonTest/23288_Neon_Negative_Extrapolat_Supplementary Material/Neon_SM/VAR/VAR_imagenet_512/
+NeonTest/23288_Neon_Negative_Extrapolat_Supplementary Material/Neon_SM/imm/
+NeonTest/23288_Neon_Negative_Extrapolat_Supplementary Material/Neon_SM/xAR/
