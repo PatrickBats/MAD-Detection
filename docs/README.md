@@ -1,7 +1,7 @@
-# The Geometry of Training on Synthetic Data
+# A Geometric Perspective on Recursive Synthetic Training
 
-**Paper**: "The Geometry of Training on Synthetic Data"
-**Venue**: DeLTa Workshop at ICLR 2026 (under review)
+**Paper**: "A Geometric Perspective on Recursive Synthetic Training"
+**Venue**: 2nd DeLTa Workshop, ICLR 2026
 
 ## Summary
 
@@ -29,9 +29,9 @@ MAD-Detection/
 │   ├── architecture.md                # GAN architecture details
 │   ├── metrics.md                     # Effective Rank + FID computation
 │   ├── full_synthetic_mnist.md        # Figure 2 experiment
-│   ├── full_synthetic_fashion.md      # Figure 5 experiment
-│   ├── augmented_synthetic.md         # Figure 6 experiment
-│   ├── neon_controlled_collapse.md    # Figures 1c, 7 experiment
+│   ├── full_synthetic_fashion.md      # Figure 6 experiment
+│   ├── augmented_synthetic.md         # Figure 7 experiment
+│   ├── neon_controlled_collapse.md    # Figures 4, 8, 9 experiment
 │   ├── neon.md                        # NEON protocol details
 │   └── reproduction.md               # Step-by-step reproduction guide
 ├── FullSynthetic/                     # Core MADness experiments
@@ -40,19 +40,19 @@ MAD-Detection/
 │   ├── data/                          # MNIST + FashionMNIST datasets
 │   └── GAN-MNIST/
 │       ├── GAN-MNIST-Default/         # Figure 2: MNIST (8 gens, ~1G)
-│       ├── GAN-MNIST-Fashion/         # Figure 5: FashionMNIST (8 gens, ~1G)
+│       ├── GAN-MNIST-Fashion/         # Figure 6: FashionMNIST (8 gens, ~1G)
 │       ├── models/                    # Pretrained LeNet for FID
 │       ├── train_lenet.py             # Train LeNet feature extractor
 │       ├── compute_fid.py            # Cross-dataset FID computation
 │       └── tsne_gan.py               # t-SNE visualization
 ├── AugmentedSynthetic/                # Real + synthetic mixing experiments
-│   ├── GAN-MNIST/                     # Figure 6: augmentation loop (~632M)
+│   ├── GAN-MNIST/                     # Figure 7: augmentation loop (~632M)
 │   └── GAN-MNIST-PaperStyle/         # Paper-style 50/50 augmentation (~82M)
 ├── FineTuning/                        # NEON implementations (~249M)
 │   ├── GAN_NEON/                      # NEON for GAN
 │   └── DDIM_NEON/                     # NEON for DDPM/DDIM
 └── NeonTest/                          # NEON experiments (~292M)
-    ├── ThomasExample/                 # Figures 1c, 7: controlled collapse
+    ├── ThomasExample/                 # Figures 4, 8, 9: controlled collapse
     ├── Test/                          # NEON tests + alternative methods
     └── 23288_.../Neon_SM/             # External supplementary models
 ```
@@ -83,9 +83,9 @@ See [reproduction.md](reproduction.md) for detailed reproduction instructions.
 | Figure | Experiment | Directory |
 |--------|------------|-----------|
 | Figure 2 | Full synthetic loop (MNIST) | `FullSynthetic/GAN-MNIST/GAN-MNIST-Default/` |
-| Figure 5 | Full synthetic loop (FashionMNIST) | `FullSynthetic/GAN-MNIST/GAN-MNIST-Fashion/` |
-| Figure 6 | Augmented synthetic (real+synthetic mix) | `AugmentedSynthetic/GAN-MNIST/` |
-| Figures 1c, 7 | Controlled collapse + NEON | `NeonTest/ThomasExample/` |
+| Figure 6 | Full synthetic loop (FashionMNIST) | `FullSynthetic/GAN-MNIST/GAN-MNIST-Fashion/` |
+| Figure 7 | Augmented synthetic (real+synthetic mix) | `AugmentedSynthetic/GAN-MNIST/` |
+| Figures 4, 8, 9 | Controlled collapse + NEON | `NeonTest/ThomasExample/` |
 
 ## Further Reading
 

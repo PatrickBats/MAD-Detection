@@ -1,4 +1,4 @@
-# NEON with Controlled Collapse (Figures 1c, 7)
+# NEON with Controlled Collapse (Figures 4, 8, 9)
 
 ## Overview
 

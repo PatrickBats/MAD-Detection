@@ -1,4 +1,4 @@
-# Full Synthetic Loop -- FashionMNIST (Figure 5)
+# Full Synthetic Loop -- FashionMNIST (Figure 6)
 
 ## Overview
 

@@ -1,4 +1,4 @@
-# Augmented Synthetic Experiments (Figure 6)
+# Augmented Synthetic Experiments (Figure 7)
 
 ## Overview
 

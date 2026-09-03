@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a research codebase for the paper **"The Geometry of Training on Synthetic Data"** (under review, DeLTa Workshop at ICLR 2026). It investigates **Model Autophagy Disorder (MADness)** — the degradation that occurs when deep generative networks (DGNs) are iteratively trained on their own synthetic outputs.
+This is a research codebase for the paper **"A Geometric Perspective on Recursive Synthetic Training"** (2nd DeLTa Workshop, ICLR 2026). It investigates **Model Autophagy Disorder (MADness)** — the degradation that occurs when deep generative networks (DGNs) are iteratively trained on their own synthetic outputs.
 
 The core finding: MADness manifests as **Jacobian effective rank collapse**. When a generator's Jacobian `J = ∂G(z)/∂z` is decomposed via SVD, the singular value spectrum concentrates on fewer directions over successive synthetic-training generations, causing both mode collapse and quality degradation.
 
@@ -49,7 +49,7 @@ eff_rank = torch.exp(entropy)                # effective rank
 ### FullSynthetic/ — Core MADness experiments (pure synthetic loop)
 Each generation trains exclusively on previous generation's synthetic output.
 - `GAN-MNIST/GAN-MNIST-Default/main.py` — **Primary GAN baseline** (8 generations, Figure 2)
-- `GAN-MNIST/GAN-MNIST-Fashion/` — FashionMNIST variant (Figure 5)
+- `GAN-MNIST/GAN-MNIST-Fashion/` — FashionMNIST variant (Figure 6)
 - `GAN-MNIST/models/` — Pretrained LeNet for FID
 - `GAN-MNIST/train_lenet.py` — Train LeNet feature extractor
 - `GAN-MNIST/compute_fid.py` — Cross-dataset FID computation
@@ -57,7 +57,7 @@ Each generation trains exclusively on previous generation's synthetic output.
 - `create_publication_figures.py` — Generates publication plots from `.pkl` result files
 - `figures/` — Publication PDF figures
 
-### AugmentedSynthetic/ — Real + synthetic mixing experiments (Figure 6)
+### AugmentedSynthetic/ — Real + synthetic mixing experiments (Figure 7)
 Tests whether including real data prevents collapse.
 - `GAN-MNIST/main.py` — Accumulating augmentation: Gen t trains on REAL + all synthetic from Gen 1..t-1
 - `GAN-MNIST/main_constant_proportion.py` — Fixed ratio of real:synthetic each generation
@@ -68,7 +68,7 @@ Tests whether including real data prevents collapse.
 - `GAN_NEON/protocol_a_neon.py` — NEON for GAN: `θ_NEON = (1+w)*θ_r - w*θ_s`
 - `DDIM_NEON/protocol_a_ddim.py` — NEON for DDPM/DDIM
 
-### NeonTest/ — Advanced NEON and controlled collapse experiments (Figures 1c, 7)
+### NeonTest/ — Advanced NEON and controlled collapse experiments (Figures 4, 8, 9)
 - `ThomasExample/neon_controlled_collapse_gan.py` — Generate synthetic samples with controlled Jacobian collapse (alpha parameter), then apply NEON
 - `ThomasExample/neon_controlled_collapse_gan_parallel.py` — Parallelized version
 - `Test/neon_gan_mnist.py` — Basic NEON test

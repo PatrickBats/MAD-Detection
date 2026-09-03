@@ -60,7 +60,7 @@ $PYTHON FullSynthetic/create_publication_figures.py
 
 ---
 
-## Figure 5: Full Synthetic Loop (FashionMNIST)
+## Figure 6: Full Synthetic Loop (FashionMNIST)
 
 **Result**: Similar ER decline pattern, demonstrating generality.
 
@@ -76,7 +76,7 @@ $PYTHON FullSynthetic/GAN-MNIST/GAN-MNIST-Fashion/jacobian_gan_multi_avg.py
 
 ---
 
-## Figure 6: Augmented Synthetic (Real + Synthetic Mix)
+## Figure 7: Augmented Synthetic (Real + Synthetic Mix)
 
 **Result**: Real data slows but doesn't prevent ER collapse. At 75% synthetic: ER drops from ~3.64 to ~1.99 over 9 generations.
 
@@ -103,7 +103,7 @@ $PYTHON AugmentedSynthetic/GAN-MNIST/plot_jacobian_proportions.py
 
 ---
 
-## Figures 1c, 7: Controlled Collapse + NEON
+## Figures 4, 8, 9: Controlled Collapse + NEON
 
 **Result**: alpha ~ 0.1 gives best NEON improvement (moderate collapse).
 
@@ -148,10 +148,10 @@ Generates PDF figures in `FullSynthetic/figures/`.
 If reproducing everything from scratch:
 
 1. **Figure 2** (MNIST full synthetic) -- required first, provides Gen 0 checkpoints
-2. **Figure 5** (FashionMNIST) -- independent, can run in parallel with #1
-3. **Figure 6** (augmented synthetic) -- independent
+2. **Figure 6** (FashionMNIST) -- independent, can run in parallel with #1
+3. **Figure 7** (augmented synthetic) -- independent
 4. **NEON Protocol A** -- depends on #1 (Gen 0 checkpoints)
-5. **Figures 1c, 7** (controlled collapse) -- depends on #1 (Gen 0 checkpoints)
+5. **Figures 4, 8, 9** (controlled collapse) -- depends on #1 (Gen 0 checkpoints)
 6. **Publication figures** -- depends on all above
 
 Steps 2 and 3 can run in parallel with each other. Steps 4 and 5 can also run in parallel, but both depend on step 1.
