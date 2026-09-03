@@ -4,7 +4,13 @@ Patrick Batsell, Thomas Walker, Richard Baraniuk (Rice University)
 
 2nd DeLTa Workshop, ICLR 2026. [[paper]](paper/A_Geometric_Perspective_on_Recursive_Synthetic_Training.pdf)
 
-Code for the experiments in the paper: generative models retrained on their own samples, the effective rank of their Jacobians across generations, and NEON with spectrum-collapsed synthetic data.
+## Summary
+
+Training generative models on their own outputs degrades sample quality and collapses diversity (Model Autophagy Disorder, or MADness). This paper looks at that degradation through the local geometry of the generator: the input-output Jacobians of the deep generative network, evaluated at sampled latent vectors. Across generations of self-training, the singular value spectra of these Jacobians concentrate on a few directions, so their effective rank drops, and the left singular vectors become noisy at increasingly low orders. The generator also becomes an increasingly jagged, high-Lipschitz map. Together these explain both symptoms of MADness, mode collapse and visible artifacts, and they show up before the drop in FID.
+
+The same picture suggests a way to use synthetic data productively. NEON fine-tunes a model on its own samples and then extrapolates away from the fine-tuned weights, so it works best when the synthetic data is mode-seeking. We generate synthetic samples by explicitly collapsing the singular value spectrum of the Jacobian with a parameter alpha and reconstructing the sample through the local affine map. Fine-tuning on this collapsed data and applying NEON gives lower FID than plain synthetic data, with the best results around alpha = 0.1. Flattening the spectrum instead has the opposite effect and dampens MADness when fine-tuning directly on synthetic data.
+
+Experiments cover a VAE on a 2-D circle, conditional GANs on MNIST and FashionMNIST in fully synthetic and partially real loops, BigGAN on CIFAR-10, and a VAE on a 5-D Gaussian for the NEON experiments.
 
 ## Contents
 
