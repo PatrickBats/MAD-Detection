@@ -60,3 +60,6 @@ NeonTest/23288_Neon_Negative_Extrapolat_Supplementary Material/Neon_SM/xAR/
 
 # Claude Code project file (local only)
 CLAUDE.md
+
+# README figures
+!assets/*.png
