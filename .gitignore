@@ -57,3 +57,6 @@ NeonTest/23288_Neon_Negative_Extrapolat_Supplementary Material/Neon_SM/VAR/VAR_i
 NeonTest/23288_Neon_Negative_Extrapolat_Supplementary Material/Neon_SM/VAR/VAR_imagenet_512/
 NeonTest/23288_Neon_Negative_Extrapolat_Supplementary Material/Neon_SM/imm/
 NeonTest/23288_Neon_Negative_Extrapolat_Supplementary Material/Neon_SM/xAR/
+
+# Claude Code project file (local only)
+CLAUDE.md
